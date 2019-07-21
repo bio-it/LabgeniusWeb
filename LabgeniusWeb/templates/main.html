@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title>index</title>
+
+
+    <!-- bootstrap css -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+    <link rel="stylesheet" href="//unpkg.com/bootstrap@3/dist/css/bootstrap.min.css">
+
+    <!-- style css -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- bootstrap javascript -->
+    <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
+    <script type="text/javascript" src="//unpkg.com/jquery@1/dist/jquery.min.js"></script>
+    <!-- script javascript   -->
+    <script type="text/javascript" src="{{ url_for('static', filename= 'main.js') }}"></script>
+</head>
+
+<body>
+<!-- main container -->
+<div class="container">
+    <!--  -->
+    <div class="container-screen">
+        <!--Status Box (Grid)-->
+        <div class="row">
+            <!-- Serial Number -->
+            <div class="col-xs-3" id="serial-number">
+                <form>
+                    <fieldset class="status-border">
+                        <legend>Serial Number</legend>
+                        <div class="controls">{{ serial_number }}</div>
+                    </fieldset>
+                </form>
+            </div>
+            <!-- Chamber -->
+            <div class="col-xs-3" id="chamber">
+                <form>
+                    <fieldset class="status-border">
+                        <legend>CHAMBER</legend>
+                        <div class="controls">{{ chamber }}</div>
+                    </fieldset>
+                </form>
+            </div>
+            <!-- LID Heater-->
+            <div class="col-xs-4" id="lid-heater">
+                <form>
+                    <fieldset class="status-border">
+                        <legend>LID HEATER</legend>
+                        <div class="controls">{{ lid_heater }}
+
+                            <input class="input-group-text" type="text"
+                                   pattern="/f{}/"
+                                   name="LID_HEATER"/>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <!-- total time-->
+            <div class="col-xs-2" id="total-time">
+                <form>
+                    <fieldset class="status-border">
+                        <legend>Total Time</legend>
+                        <div class="controls">{{ total_time }}</div>
+                    </fieldset>
+                </form>
+
+            </div>
+        </div>
+        <!-- Table Box -->
+        <div class="table-box">
+            <table class="table">
+                <!-- -->
+                <thead>
+                <tr class="table-primary">
+                    <th>Label</th>
+                    <th>Temp</th>
+                    <th>Time</th>
+                    <th>Remain</th>
+                </tr>
+                </thead>
+                <tbody id="tbody">
+                <!-- if ReadProtocol button click -->
+                </tbody>
+            </table>
+        </div>
+        <!-- Button Box -->
+        <div class="btn-box">
+            <input type="button" class="btn" value="Start" id="btnStart" onclick="start();"/>
+            <input type="button" class="btn" value="Stop" id="btnStop" onclick="stop();" disabled="disabled"/>
+            <input type="button" class="btn" value="Read Protocol" id="btnRead" onclick="ReadProtocol();"/>
+        </div>
+    </div>
+</div>
+</body>
+</html>
