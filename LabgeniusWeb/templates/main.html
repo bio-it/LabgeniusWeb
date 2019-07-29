@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-
     <title>index</title>
 
 
@@ -12,13 +11,14 @@
 
     <!-- style css -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
     <!-- bootstrap javascript -->
-    <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
-    <script type="text/javascript" src="//unpkg.com/jquery@1/dist/jquery.min.js"></script>
+    <script type="text/javascript" src={{ url_for('static',  filename='js/bootstrap.js') }}></script>
+
     <!-- script javascript   -->
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script type="text/javascript" src="{{ url_for('static', filename= 'main.js') }}"></script>
 </head>
-
 <body>
 <!-- main container -->
 <div class="container">
@@ -27,34 +27,32 @@
         <!--Status Box (Grid)-->
         <div class="row">
             <!-- Serial Number -->
-            <div class="col-xs-3" id="serial-number">
+            <div class="col-xs-3">
                 <form>
                     <fieldset class="status-border">
                         <legend>Serial Number</legend>
-                        <div class="controls">{{ serial_number }}</div>
+                        <div class="controls" id="serial-number">{{ serial_number }}</div>
                     </fieldset>
                 </form>
             </div>
             <!-- Chamber -->
-            <div class="col-xs-3" id="chamber">
+            <div class="col-xs-3">
                 <form>
                     <fieldset class="status-border">
                         <legend>CHAMBER</legend>
-                        <div class="controls">{{ chamber }}</div>
+                        <div class="controls" id="chamber"></div>
                     </fieldset>
                 </form>
             </div>
             <!-- LID Heater-->
-            <div class="col-xs-4" id="lid-heater">
+            <div class="col-xs-4">
                 <form>
                     <fieldset class="status-border">
                         <legend>LID HEATER</legend>
-                        <div class="controls">{{ lid_heater }}
-
-                            <input class="input-group-text" type="text"
-                                   pattern="/f{}/"
-                                   name="LID_HEATER"/>
-                        </div>
+                        <div class="controls" id="lid-heater"></div>
+                        <input class="input-group-text" type="text"
+                               pattern="/f{}/"
+                               name="LID_HEATER"/>
                     </fieldset>
                 </form>
             </div>
@@ -63,7 +61,7 @@
                 <form>
                     <fieldset class="status-border">
                         <legend>Total Time</legend>
-                        <div class="controls">{{ total_time }}</div>
+                        <div class="controls" id="total-time"></div>
                     </fieldset>
                 </form>
 
@@ -88,11 +86,14 @@
         </div>
         <!-- Button Box -->
         <div class="btn-box">
-            <input type="button" class="btn" value="Start" id="btnStart" onclick="start();"/>
-            <input type="button" class="btn" value="Stop" id="btnStop" onclick="stop();" disabled="disabled"/>
-            <input type="button" class="btn" value="Read Protocol" id="btnRead" onclick="ReadProtocol();"/>
+            <input type="button" class="btn" value="Start" id="btn-start" onclick="start();"/>
+            <input type="button" class="btn" value="Stop" id="btn-stop" onclick="stop();" disabled="disabled"/>
+            <input type="button" class="btn" value="Read Protocol" id="btn-read"/>
         </div>
     </div>
 </div>
+
+<script type="text/javascript">initialized();</script>
+<script type="text/javascript">onLoad();</script>
 </body>
 </html>

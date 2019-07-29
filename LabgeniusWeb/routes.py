@@ -15,8 +15,7 @@ total_time = "00:00:00"
 # Action Table View
 @app.route('/')
 def main():
-    return render_template('./main.html', serial_number=serial_number, chamber=chamber, lid_heater=lid_heater,
-                           total_time=total_time)
+    return render_template('./main.html', serial_number=serial_number)
 
 
 # Protocol List View 수정중
