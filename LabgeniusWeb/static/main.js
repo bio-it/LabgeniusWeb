@@ -29,8 +29,8 @@ let lightBlue = "#3e91b5";
 let white = "#ffffff";
 
 
-// test
-let test = false;
+// blink
+let blink = false;
 
 // Initialized elements
 function initialized() {
@@ -149,7 +149,7 @@ function loadTable() {
 
 function checkGoto(protocol, currentNumber) {
     if (protocol.label == 'GOTO') {
-        if (remainingGotoCount == -1)
+        if (remainingGotoCount == -1 && remainingGotoCount != 0)
             return '<th>' + protocol.time + '</th>';
         return '<th>' + remainingGotoCount + '</th>';
     } else if (currentActionNumber == currentNumber)
@@ -162,9 +162,9 @@ function checkActionNumber() {
     if (currentActionNumber != -1) {
         let currentAction = document.getElementById('protocol-' + currentActionNumber);
         console.log('currentAction : protocol-' + currentActionNumber);
-        if (test)currentAction.style.backgroundColor= lightBlue;
+        if (blink)currentAction.style.backgroundColor= lightBlue;
         else currentAction.style.backgroundColor= white;
-        test = !test;
+        blink = !blink;
     }
 }
 
@@ -185,6 +185,9 @@ function toHHMMSS(time) {
     return hours + ':' + minutes + ':' + seconds;
 }
 
+function read() {
+    location.href = "protocols";
+}
 //
 // // Status Box check
 // function checkStatusBox() {
