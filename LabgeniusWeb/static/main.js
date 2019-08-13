@@ -48,7 +48,7 @@ function initialized() {
 // Load Status
 function onLoad() {
     //interval : 1000ms
-    let timer = setInterval(function () {
+    setInterval(function () {
         $.ajax({
             url: "http://210.115.227.99:6009/api/pcr/status",
             dataType: "json",
