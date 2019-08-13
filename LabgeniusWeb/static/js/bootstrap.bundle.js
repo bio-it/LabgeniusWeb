@@ -3398,7 +3398,7 @@
     };
 
     order.forEach(function (placement) {
-      var side = ['left', 'top'].indexOf(placement) !== -1 ? 'primary' : 'secondary';
+      var side = ['left', 'top'].indexOf(placement) !== -1 ? 'siyan' : 'secondary';
       popper = _extends({}, popper, check[side](placement));
     });
 

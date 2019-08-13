@@ -25,9 +25,9 @@
     <!--  -->
     <div class="container-screen">
         <!--Status Box (Grid)-->
-        <div class="row">
+        <div class="row status-box">
             <!-- Serial Number -->
-            <div class="col-xs-3">
+            <div class="col-3 status-box-elements">
                 <form>
                     <fieldset class="status-border">
                         <legend>Serial Number</legend>
@@ -36,28 +36,31 @@
                 </form>
             </div>
             <!-- Chamber -->
-            <div class="col-xs-3">
+            <div class="col-3 ">
                 <form>
                     <fieldset class="status-border">
                         <legend>CHAMBER</legend>
-                        <div class="controls" id="chamber"></div>
+                        <div class="controls status-box-elements" id="chamber"></div>
                     </fieldset>
                 </form>
             </div>
             <!-- LID Heater-->
-            <div class="col-xs-4">
+            <div class="col-3 ">
                 <form>
                     <fieldset class="status-border">
                         <legend>LID HEATER</legend>
-                        <div class="controls" id="lid-heater"></div>
-                        <input class="input-group-text" type="text"
-                               pattern="/f{}/"
-                               name="LID_HEATER"/>
+                        <div class="row ">
+                            <div class="controls status-box-elements" id="lid-heater">{{ lid_heater }}</div>
+                            <input class="input-group-text status-box-elements" type="text"
+                                   pattern="/f{}/"
+                                   name="LID_HEATER"/>
+                        </div>
+
                     </fieldset>
                 </form>
             </div>
             <!-- total time-->
-            <div class="col-xs-2" id="total-time">
+            <div class="col-2 status-box-elements">
                 <form>
                     <fieldset class="status-border">
                         <legend>Total Time</legend>
@@ -79,16 +82,15 @@
                     <th>Remain</th>
                 </tr>
                 </thead>
-                <tbody id="tbody">
-                <!-- if ReadProtocol button click -->
-                </tbody>
+                <tbody id="tbody"></tbody>
             </table>
         </div>
         <!-- Button Box -->
         <div class="btn-box">
-            <input type="button" class="btn" value="Start" id="btn-start" onclick="start();"/>
-            <input type="button" class="btn" value="Stop" id="btn-stop" onclick="stop();" disabled="disabled"/>
-            <input type="button" class="btn" value="Read Protocol" id="btn-read"/>
+            <input type="button" class="btn-group btn" value="Start" id="btn-start" onclick="start();"/>
+            <input type="button" class="btn-group btn" value="Stop" id="btn-stop" onclick="stop();"
+                   disabled="disabled"/>
+            <input type="button" class="btn-group btn" value="Read Protocol" id="btn-read"/>
         </div>
     </div>
 </div>

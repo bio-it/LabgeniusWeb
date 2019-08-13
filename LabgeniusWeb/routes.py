@@ -5,7 +5,7 @@ from flask import Flask, render_template
 app = Flask(__name__)
 
 # Status
-serial_number = "MyPCR000005"
+serial_number = "PCR000001"
 chamber = "25.2℃"
 lid_heater = "25.2℃"
 total_time = "00:00:00"
@@ -15,13 +15,7 @@ total_time = "00:00:00"
 # Action Table View
 @app.route('/')
 def main():
-    return render_template('./main.html', serial_number=serial_number)
-
-
-# Protocol List View 수정중
-@app.route('/protocols')
-def protocols():
-    return None
+    return render_template('./main.html', serial_number=serial_number, lid_heater=lid_heater)
 
 
 # main function

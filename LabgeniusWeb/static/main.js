@@ -1,6 +1,6 @@
 // Status
-let status = null
-let result = null
+let status = null;
+let result = null;
 let running = false;
 let temperature = 20;
 let remainingSec = 0;
@@ -23,6 +23,14 @@ let serial_number;
 let chamber;
 let lid_heater;
 let total_time;
+
+// colors
+let lightBlue = "#3e91b5";
+let white = "#ffffff";
+
+
+// test
+let test = false;
 
 // Initialized elements
 function initialized() {
@@ -49,7 +57,7 @@ function onLoad() {
                 status = data;
                 result = status.result;
                 if (result === "ok") {
-                    // load status
+                    // set status
                     running = status.data.running;
                     temperature = status.data.temperature;
                     remainingSec = status.data.remainingSec;
@@ -61,7 +69,7 @@ function onLoad() {
                     protocols = status.data.protocols;
 
                     let tbody = document.getElementById('tbody'); //table body
-                    tbody.innerHTML = makeTable();
+                    tbody.innerHTML = loadTable();
                     // checkStatusBox();
                     if (running) {
                         btn_start.disabled = 'disabled';
@@ -70,7 +78,9 @@ function onLoad() {
                         btn_start.disabled = false;
                         btn_stop.disabled = 'disabled';
                     }
-
+                    chamber.innerHTML = temperature + '℃';
+                    total_time.innerHTML = toHHMMSS(remainingTotalSec);
+                    checkActionNumber();
                 }
             },
             error: function (request, status, error) {
@@ -81,6 +91,7 @@ function onLoad() {
     }, 500);
 
 }
+
 
 // Start protocols
 function start() {
@@ -101,7 +112,7 @@ function start() {
         },
         error: function (request, status, error) {
             console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-            if (running) alert('pcr already running!!');
+            if (running) alert('already running!!');
         }
     });
 }
@@ -117,23 +128,61 @@ function stop() {
         },
         error: function (request, status, error) {
             console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-            if (!running) alert('pcr already stop!!');
         }
     });
 }
 
 // Make html in able body
-function makeTable() {
-    var html = "";
+function loadTable() {
+    var table = "";
     for (var i = 0; i < totalActionNumber; i++) {
-        html += '<tr>';
-        html += '<th>' + protocols[i].label + '</th>';
-        html += '<th>' + protocols[i].temp + '</th>';
-        html += '<th>' + protocols[i].time + '</th>';
-        html += (currentActionNumber === i) ? '<th>' + remainingSec + '</th>' : '<th></th>';
-        html += '</tr>';
+        table += '<tr id="protocol-' + i + '">';
+        table += '<th>' + protocols[i].label + '</th>';
+        table += '<th>' + protocols[i].temp + '</th>';
+        table += '<th>' + protocols[i].time + '</th>';
+        table += checkGoto(protocols[i], i);
+        table += '</tr>';
+        console.log('loadTable : protocol-' + i);
     }
-    return html;
+    return table;
+}
+
+function checkGoto(protocol, currentNumber) {
+    if (protocol.label == 'GOTO') {
+        if (remainingGotoCount == -1)
+            return '<th>' + protocol.time + '</th>';
+        return '<th>' + remainingGotoCount + '</th>';
+    } else if (currentActionNumber == currentNumber)
+        return '<th>' + remainingSec + '</th>';
+    else
+        return '<th></th>';
+}
+
+function checkActionNumber() {
+    if (currentActionNumber != -1) {
+        let currentAction = document.getElementById('protocol-' + currentActionNumber);
+        console.log('currentAction : protocol-' + currentActionNumber);
+        if (test)currentAction.style.backgroundColor= lightBlue;
+        else currentAction.style.backgroundColor= white;
+        test = !test;
+    }
+}
+
+function toHHMMSS(time) {
+    let hours = Math.floor(time / 3600);
+    let minutes = Math.floor((time - (hours * 3600)) / 60);
+    let seconds = time - (hours * 3600) - (minutes * 60);
+
+    if (hours < 10) {
+        hours = "0" + hours;
+    }
+    if (minutes < 10) {
+        minutes = "0" + minutes;
+    }
+    if (seconds < 10) {
+        seconds = "0" + seconds;
+    }
+    return hours + ':' + minutes + ':' + seconds;
 }
 
 //

@@ -29,7 +29,7 @@ body {
     bottom: 0;
     right: 0;
     margin: 10% auto;
-    min-width: 70%;
+    min-width: 80%;
 }
 
 .table-box {
@@ -80,6 +80,7 @@ legend {
 }
 
 .status-box-elements {
-    float: left;
-    width: 20%
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto
 }
