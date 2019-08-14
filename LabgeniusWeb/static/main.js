@@ -1,3 +1,7 @@
+//
+// Field
+//
+
 // Status
 let status = null;
 let result = null;
@@ -24,12 +28,12 @@ let chamber;
 let lid_heater;
 let total_time;
 
-// colors
+// Colors
 let lightBlue = "#3e91b5";
 let white = "#ffffff";
 
 
-// blink
+// Blink
 let blink = false;
 
 // Initialized elements
@@ -46,7 +50,7 @@ function initialized() {
 }
 
 // Load Status
-function onLoad() {
+function load() {
     //interval : 1000ms
     setInterval(function () {
         $.ajax({
@@ -56,7 +60,7 @@ function onLoad() {
             success: function (data) {
                 status = data;
                 result = status.result;
-                if (result === "ok") {
+                if (result == "ok") {
                     // set status
                     running = status.data.running;
                     temperature = status.data.temperature;
@@ -69,7 +73,7 @@ function onLoad() {
                     protocols = status.data.protocols;
 
                     let tbody = document.getElementById('tbody'); //table body
-                    tbody.innerHTML = loadTable();
+                    tbody.innerHTML = load_table();
                     // checkStatusBox();
                     if (running) {
                         btn_start.disabled = 'disabled';
@@ -95,14 +99,6 @@ function onLoad() {
 
 // Start protocols
 function start() {
-    /*
-    btnStart = document.getElementById('btnStart');
-    btnStop = document.getElementById('btnStop');
-    btnStart.disabled = 'disabled';
-    btnStop.disabled = false;
-    alert('Start');
-    */
-
     $.ajax({
         url: "http://210.115.227.99:6009/api/pcr/start",
         dataType: "json",
@@ -117,7 +113,7 @@ function start() {
     });
 }
 
-//Stop protocols
+// Stop protocols
 function stop() {
     $.ajax({
         url: "http://210.115.227.99:6009/api/pcr/stop",
@@ -132,8 +128,17 @@ function stop() {
     });
 }
 
+// Read Protocols
+function read() {
+    if (running) {
+        alert('is running')
+       return;
+    }
+    location.href = "protocols";
+}
+
 // Make html in able body
-function loadTable() {
+function load_table() {
     var table = "";
     for (var i = 0; i < totalActionNumber; i++) {
         table += '<tr id="protocol-' + i + '">';
@@ -142,7 +147,6 @@ function loadTable() {
         table += '<th>' + protocols[i].time + '</th>';
         table += checkGoto(protocols[i], i);
         table += '</tr>';
-        console.log('loadTable : protocol-' + i);
     }
     return table;
 }
@@ -161,9 +165,8 @@ function checkGoto(protocol, currentNumber) {
 function checkActionNumber() {
     if (currentActionNumber != -1) {
         let currentAction = document.getElementById('protocol-' + currentActionNumber);
-        console.log('currentAction : protocol-' + currentActionNumber);
-        if (blink)currentAction.style.backgroundColor= lightBlue;
-        else currentAction.style.backgroundColor= white;
+        if (blink) currentAction.style.backgroundColor = lightBlue;
+        else currentAction.style.backgroundColor = white;
         blink = !blink;
     }
 }
@@ -185,16 +188,3 @@ function toHHMMSS(time) {
     return hours + ':' + minutes + ':' + seconds;
 }
 
-function read() {
-    location.href = "protocols";
-}
-//
-// // Status Box check
-// function checkStatusBox() {
-//
-//     chamber.innerHTML = temperature;
-//     lid_heater.innerHTML = temperature;
-//     total_time.innerHTML = new Date().format("HH:mm:ss");
-//
-// }
-//

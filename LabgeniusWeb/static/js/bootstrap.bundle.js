@@ -3521,7 +3521,7 @@
    * Popper.js uses a set of 9 modifiers to provide all the basic functionalities
    * needed by the library.
    *
-   * Usually you don't want to override the `order`, `fn` and `onLoad` props.
+   * Usually you don't want to override the `order`, `fn` and `load` props.
    * All the other properties are configurations that could be tweaked.
    * @namespace modifiers
    */

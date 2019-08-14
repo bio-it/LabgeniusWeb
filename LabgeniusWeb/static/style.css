@@ -12,6 +12,10 @@ body {
     padding: 50px;
 }
 
+#screen-middle {
+    min-width: 40%;
+}
+
 .container {
     margin: 20px auto;
     width: auto;
@@ -23,13 +27,9 @@ body {
     padding: 20px;
     border-radius: 5px;
     display: table;
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
     margin: 10% auto;
-    min-width: 80%;
+    min-width: 1000px;
+    float: inside;
 }
 
 .table-box {
@@ -37,6 +37,9 @@ body {
     height: auto;
 }
 
+th {
+    text-align: center;
+}
 
 input {
     text-align: center;
@@ -73,6 +76,12 @@ legend {
 .btn-box {
     margin-top: 30px;
 
+}
+.btn-left {
+    float: left;
+}
+.btn-right {
+    float: right;
 }
 
 .btn:hover {

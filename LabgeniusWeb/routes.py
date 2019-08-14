@@ -12,12 +12,12 @@ total_time = "00:00:00"
 
 
 # default route
-# Action Table
+# action table
 @app.route('/')
 def main():
     return render_template('./main.html', serial_number=serial_number, lid_heater=lid_heater)
 
-# Protocol List
+# protocol list
 @app.route('/protocols')
 def protocols():
     return render_template('./protocols.html')
@@ -25,4 +25,4 @@ def protocols():
 
 # main
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', debug=True)
