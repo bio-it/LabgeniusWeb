@@ -21,12 +21,14 @@ let btn_read;
 let btn_start;
 let btn_stop;
 
+// table body
+let tbody;
 
 // Status Box elements
 let serial_number;
-let chamber;
-let lid_heater;
-let total_time;
+let temp;
+let elapsed_time;
+let remaining_time;
 
 // Colors
 let lightBlue = "#3e91b5";
@@ -43,9 +45,10 @@ function initialized() {
     btn_start = document.getElementById('btn-start');
     btn_stop = document.getElementById('btn-stop');
 
-    chamber = document.getElementById('chamber');
-    lid_heater = document.getElementById('lid-heater');
-    total_time = document.getElementById('total-time');
+    temp = document.getElementById('temperature');
+    elapsed_time = document.getElementById('elapsed-time');
+    remaining_time = document.getElementById('remaining-time');
+    tbody = document.getElementById('tbody');
 
 }
 
@@ -72,7 +75,7 @@ function load() {
                     elapsedTime = status.data.elapsedTime;
                     protocols = status.data.protocols;
 
-                    let tbody = document.getElementById('tbody'); //table body
+                    //table body
                     tbody.innerHTML = load_table();
                     // checkStatusBox();
                     if (running) {
@@ -82,9 +85,13 @@ function load() {
                         btn_start.disabled = false;
                         btn_stop.disabled = 'disabled';
                     }
-                    chamber.innerHTML = temperature + '℃';
-                    total_time.innerHTML = toHHMMSS(remainingTotalSec);
+                    temp.innerHTML = temperature + '℃';
+                    elapsed_time.innerHTML = elapsedTime == "" ? toHHMMSS(0) : elapsedTime;
+                    remaining_time.innerHTML = toHHMMSS(remainingTotalSec);
                     checkActionNumber();
+
+                    if (remainingTotalSec == 0)
+                        alert('pcr end');
                 }
             },
             error: function (request, status, error) {
@@ -93,6 +100,7 @@ function load() {
             }
         });
     }, 500);
+
 
 }
 
@@ -132,7 +140,7 @@ function stop() {
 function read() {
     if (running) {
         alert('is running')
-       return;
+        return;
     }
     location.href = "protocols";
 }
@@ -142,6 +150,11 @@ function load_table() {
     var table = "";
     for (var i = 0; i < totalActionNumber; i++) {
         table += '<tr id="protocol-' + i + '">';
+        if (protocols[i].label == 'SHOT') {
+            table += '<th>' + protocols[i].label + '</th>';
+            for (var j = 0; j < 3; j++) table += '<th></th>';
+            continue;
+        }
         table += '<th>' + protocols[i].label + '</th>';
         table += '<th>' + protocols[i].temp + '</th>';
         table += '<th>' + protocols[i].time + '</th>';
@@ -153,7 +166,7 @@ function load_table() {
 
 function checkGoto(protocol, currentNumber) {
     if (protocol.label == 'GOTO') {
-        if (remainingGotoCount == -1 && remainingGotoCount != 0)
+        if (remainingGotoCount == -1)
             return '<th>' + protocol.time + '</th>';
         return '<th>' + remainingGotoCount + '</th>';
     } else if (currentActionNumber == currentNumber)

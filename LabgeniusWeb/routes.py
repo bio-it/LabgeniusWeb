@@ -6,21 +6,32 @@ app = Flask(__name__)
 
 # Status
 serial_number = "PCR000001"
-chamber = "25.2℃"
-lid_heater = "25.2℃"
-total_time = "00:00:00"
+temperature = "25.2℃"
+elapsed_time = "00:00:00"
+remaining_time = "00:00:00"
 
 
 # default route
 # action table
 @app.route('/')
 def main():
-    return render_template('./main.html', serial_number=serial_number, lid_heater=lid_heater)
+    return render_template('./main.html', serial_number=serial_number, temperature=temperature,
+                           elapsed_time=elapsed_time, remaining_time=remaining_time)
+
 
 # protocol list
 @app.route('/protocols')
 def protocols():
     return render_template('./protocols.html')
+
+
+@app.route('/protocols/edit/<name>')
+def edit(name):
+    return render_template('./edit.html', name=name)
+
+@app.route('/protocols/new')
+def new():
+    return render_template('./new.html')
 
 
 # main

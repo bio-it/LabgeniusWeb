@@ -35,12 +35,12 @@
                     </fieldset>
                 </form>
             </div>
-            <!-- Chamber -->
+            <!-- Temperature -->
             <div class="col-3 ">
                 <form>
                     <fieldset class="status-border">
-                        <legend>CHAMBER</legend>
-                        <div class="controls status-box-elements" id="chamber"></div>
+                        <legend>Temperature</legend>
+                        <div class="controls status-box-elements" id="temperature">{{ temperature }}</div>
                     </fieldset>
                 </form>
             </div>
@@ -48,8 +48,8 @@
             <div class="col-3 ">
                 <form>
                     <fieldset class="status-border">
-                        <legend>LID HEATER</legend>
-                        <div class="controls status-box-elements" id="lid-heater">{{ lid_heater }}</div>
+                        <legend>Elapsed Time</legend>
+                        <div class="controls status-box-elements" id="elapsed-time">{{ elapsed_time }}</div>
                     </fieldset>
                 </form>
             </div>
@@ -57,8 +57,8 @@
             <div class="col-3 status-box-elements">
                 <form>
                     <fieldset class="status-border">
-                        <legend>Total Time</legend>
-                        <div class="controls" id="total-time"></div>
+                        <legend>Remaining Time</legend>
+                        <div class="controls" id="remaining-time">{{ remaining_time }}</div>
                     </fieldset>
                 </form>
 
@@ -81,8 +81,8 @@
         </div>
         <!-- Button Box -->
         <div class="btn-box">
-            <input type="button" class="btn-group btn" value="Start" id="btn-start" onclick="start();"/>
-            <input type="button" class="btn-group btn" value="Stop" id="btn-stop" onclick="stop();"/>
+            <input type="button" class="btn-group btn" value="Start" id="btn-start" onclick="start();" disabled='disabled'/>
+            <input type="button" class="btn-group btn" value="Stop" id="btn-stop" onclick="stop();" disabled='disabled'/>
             <input type="button" class="btn-group btn btn-right" value="Protocols" id="btn-protocols" onclick="read()"/>
         </div>
     </div>
