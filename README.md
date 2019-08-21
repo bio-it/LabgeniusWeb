@@ -15,7 +15,7 @@ Web gui for new labgenius
   - http://210.115.229.101:5000/protocols/new
   
 4. Protocol Edit
-  - http://210.115.229.101:5000/protocols/name
+  - http://210.115.229.101:5000/protocols/edit/edit
   
 # Function 
 1. protocol select
