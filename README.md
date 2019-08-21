@@ -4,7 +4,7 @@ Web gui for new labgenius
 # Page
 
 1. Main Page
-  - http://http://210.115.229.101:5000
+  - http://210.115.229.101:5000
   - PCR Start, Stop.
 
 2. Protocols (Protocol List)
