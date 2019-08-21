@@ -13,7 +13,7 @@ Web gui for new labgenius
     - protocol select, new, delete, edit.
 
 
-3. protocol new 
+3. Protocol new 
     - http://210.115.229.101:5000/protocols/new
   
   
