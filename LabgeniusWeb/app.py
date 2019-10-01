@@ -1,10 +1,10 @@
-# routes.py
+# app.py
 
-from flask import Flask, render_template
+from flask import Flask, render_template, url_for
 
 app = Flask(__name__)
 
-# Status
+# default status
 serial_number = "PCR000001"
 temperature = "25.2℃"
 elapsed_time = "00:00:00"
