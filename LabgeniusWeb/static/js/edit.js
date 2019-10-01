@@ -1,11 +1,12 @@
 let proto = null;
 let protocols = null;
+let host = 'http://210.115.227.78:6009';
 
 function initialized() {
 
 
     $.ajax({
-        url: "http://210.115.227.99:6009/api/pcr/protocol/list",
+        url: host + "/api/pcr/protocol/list",
         datatype: "json",
         type: "post",
         success: function (data) {

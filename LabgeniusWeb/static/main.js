@@ -38,6 +38,8 @@ let white = "#ffffff";
 // Blink
 let blink = false;
 
+let host = 'http://210.115.227.78:6009';
+
 // Initialized elements
 function initialized() {
 
@@ -56,8 +58,9 @@ function initialized() {
 function load() {
     //interval : 1000ms
     setInterval(function () {
+        console.log('host : ' + host);
         $.ajax({
-            url: "http://210.115.227.99:6009/api/pcr/status",
+            url: host + "/api/pcr/status",
             dataType: "json",
             type: "post",
             success: function (data) {
@@ -108,7 +111,7 @@ function load() {
 // Start protocols
 function start() {
     $.ajax({
-        url: "http://210.115.227.99:6009/api/pcr/start",
+        url: host + "/api/pcr/start",
         dataType: "json",
         type: "post",
         success: function () {
@@ -124,7 +127,7 @@ function start() {
 // Stop protocols
 function stop() {
     $.ajax({
-        url: "http://210.115.227.99:6009/api/pcr/stop",
+        url: host + "/api/pcr/stop",
         dataType: "json",
         type: "post",
         success: function () {

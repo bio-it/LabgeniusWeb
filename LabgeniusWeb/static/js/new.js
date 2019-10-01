@@ -2,13 +2,14 @@ let protocols = null;
 let text = null;
 let name = null;
 let check_data = null;
+let host = 'http://210.115.227.78:6009';
 
 function initialized() {
     text = document.getElementById('text');
     name = document.getElementById('name');
 
     $.ajax({
-        url: "http://210.115.227.99:6009/api/pcr/protocol/list",
+        url: host + "/api/pcr/protocol/list",
         datatype: "json",
         type: "post",
         success: function (data) {
@@ -36,7 +37,7 @@ function protocol_check() {
     }
 
     $.ajax({
-        url: "http://210.115.227.99:6009/api/pcr/protocol/check",
+        url: host + "/api/pcr/protocol/check",
         datatype: "json",
         contentType: "text/plain",
         type: "post",
@@ -55,7 +56,7 @@ function protocol_check() {
 function protocol_new() {
     protocol_check();
     $.ajax({
-        url: "http://210.115.227.99:6009/api/pcr/protocol/new",
+        url: host + "/api/pcr/protocol/new",
         datatype: "json",
         contentType: "text/plain",
         type: "post",

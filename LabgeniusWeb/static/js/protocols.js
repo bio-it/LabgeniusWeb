@@ -2,6 +2,8 @@ let result = null;
 let current_proto = null;
 let current_index = -1;
 let protocols = null;
+let host = 'http://210.115.227.78:6009';
+
 
 // Colors
 let lightBlue = "#3e91b5";
@@ -21,7 +23,7 @@ function protocol_new() {
 function protocol_delete() {
     if (current_proto != null) {
         $.ajax({
-            url: "http://210.115.227.99:6009/api/pcr/protocol/delete",
+            url: host + "/api/pcr/protocol/delete",
             datatype: "json",
             contentType: "text/plain",
             type: "post",
@@ -41,7 +43,7 @@ function protocol_delete() {
 
 function select_protocol() {
     $.ajax({
-        url: "http://210.115.227.99:6009/api/pcr/protocol/select",
+        url: host + "/api/pcr/protocol/select",
         datatype: "json",
         contentType: "text/plain",
         type: "post",
@@ -59,7 +61,7 @@ function select_protocol() {
 
 function initialized() {
     $.ajax({
-        url: "http://210.115.227.99:6009/api/pcr/protocol/list",
+        url: host + "/api/pcr/protocol/list",
         datatype: "json",
         type: "post",
         success: function (data) {
