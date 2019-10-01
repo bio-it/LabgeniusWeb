@@ -10,7 +10,6 @@ function initialized() {
         datatype: "json",
         type: "post",
         success: function (data) {
-
             if (data.result == 'ok') {
                 protocols = data.protocols;
                 let name = document.location.href.split('/')[5];
@@ -18,7 +17,7 @@ function initialized() {
 
                     if (protocols[i][1] == name) {
                         proto = protocols[i];
-                        load_protocol();
+                        loadProtocol();
                         break;
                     }
                 }
@@ -32,7 +31,7 @@ function initialized() {
     });
 }
 
-function load_protocol() {
+function loadProtocol() {
     let value = "";
     let text = document.getElementById('text');
     let data = JSON.parse(proto[4]);
@@ -53,10 +52,10 @@ function load_protocol() {
     text.value = replaceAll(value, '.0', '');
 }
 
-function protocol_edit() {
+function protocolEdit() {
     let text = document.getElementById('text');
     $.ajax({
-        url: "http://210.115.227.99:6009/api/pcr/protocol/edit",
+        url: host + "/api/pcr/protocol/edit",
         datatype: "json",
         contentType: "text/plain",
         type: "post",

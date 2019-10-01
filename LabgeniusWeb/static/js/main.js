@@ -1,28 +1,29 @@
-let result = null;
-
+var result = null;
+var data;
+var runTimer;
 // Button Box elements
-let btn_read;
-let btn_start;
-let btn_stop;
+var btn_read;
+var btn_start;
+var btn_stop;
 
 // table body
-let table;
+var table;
 
 // Status Box elements
-let serial_number;
-let temperature;
-let elapsed_time;
-let remaining_time;
+var serial_number;
+var temperature;
+var elapsed_time;
+var remaining_time;
 
 // Colors
-let lightBlue = "#3e91b5";
-let white = "#ffffff";
+var lightBlue = "#3e91b5";
+var white = "#ffffff";
 
 // Blink
-let blink = false;
+var blink = false;
 
 // host url
-let host = 'http://210.115.227.78:6009';
+var host = 'http://210.115.227.78:6009';
 
 // Initialized elements
 function initialized() {
@@ -36,48 +37,58 @@ function initialized() {
     remaining_time = document.getElementById('remaining-time');
     table = document.getElementById('table-contents');
 
+    loadJson();
+    if (data.running) onRunning();
 }
 
-// load
-function load() {
-    //interval : 1000ms
-    setInterval(function () {
-        console.log('host : ' + host);
-        $.ajax({
-            url: host + "/api/pcr/status",
-            dataType: "json",
-            type: "post",
-            success: function (json) {
-                result = json.result;
-                data = json.data;
-                if (result == "ok") {
-                    //table body
-                    table.innerHTML = loadTable();
-                    // checkStatusBox();
-                    if (running) {
-                        btn_start.disabled = 'disabled';
-                        btn_stop.disabled = false;
-                    } else {
-                        btn_start.disabled = false;
-                        btn_stop.disabled = 'disabled';
-                    }
-                    temperature.innerHTML = data.temperature + '℃';
-                    elapsed_time.innerHTML = data.elapsedTime == "" ? toHHMMSS(0) : elapsedTime;
-                    remaining_time.innerHTML = toHHMMSS(Number(data.remainingTotalSec));
-                    checkActionNumber();
+// load json data
+function loadJson() {
+    $.ajax({
+        url: host + "/api/pcr/status",
+        dataType: "json",
+        type: "post",
+        success: function (json) {
+            result = json.result;
+            data = json.data;
+            if (result == "ok") {
+                //table body
+                table.innerHTML = makeTable(data.protocols, data.totalActionNumber);
 
-                    if (remainingTotalSec == 0)
-                        alert('pcr end');
+                temperature.innerHTML = data.temperature + '℃';
+                elapsed_time.innerHTML = data.elapsedTime == "" ? toHHMMSS(0) : elapsedTime;
+                remaining_time.innerHTML = toHHMMSS(Number(data.remainingTotalSec));
+                checkActionNumber(data.currentActionNumber);
+                // checkStatusBox();
+                if (remainingTotalSec <= 0)
+                    alert('pcr end');
+
+                if (data.running) {
+                    btn_start.disabled = 'disabled';
+                    btn_stop.disabled = false;
+
+                } else {
+                    btn_start.disabled = false;
+                    btn_stop.disabled = 'disabled';
                 }
-            },
-            error: function (request, status, error) {
-                console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+
 
             }
-        });
-    }, 500);
+        },
+        error: function (request, status, error) {
+            console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+
+        }
+    });
 
 
+}
+
+function onRunning() {
+    //if running interval : 500ms else interval : 10s
+    let interval = data.running ? 500 : 10000;
+    runTimer = setInterval(loadJson());
+
+    
 }
 
 
@@ -88,7 +99,7 @@ function start() {
         dataType: "json",
         type: "post",
         success: function () {
-            console.log('success');
+            console.log('start pcr');
         },
         error: function (request, status, error) {
             console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -104,7 +115,7 @@ function stop() {
         dataType: "json",
         type: "post",
         success: function () {
-            console.log('success');
+            console.log('stop pcr');
         },
         error: function (request, status, error) {
             console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -122,22 +133,22 @@ function read() {
 }
 
 // Make html in able body
-function loadTable() {
-    var table = "";
+function makeTable(protocols, totalActionNumber) {
+    let table_contents = "";
     for (var i = 0; i < totalActionNumber; i++) {
-        table += '<tr id="protocol-' + i + '">';
+        table_contents += '<tr id="protocol-' + i + '">';
         if (protocols[i].label == 'SHOT') {
-            table += '<th>' + protocols[i].label + '</th>';
-            for (var j = 0; j < 3; j++) table += '<th></th>';
+            table_contents += '<th>' + protocols[i].label + '</th>';
+            for (var j = 0; j < 3; j++) table_contents += '<th></th>';
             continue;
         }
-        table += '<th>' + protocols[i].label + '</th>';
-        table += '<th>' + protocols[i].temp + '</th>';
-        table += '<th>' + protocols[i].time + '</th>';
-        table += checkGoto(protocols[i], i);
-        table += '</tr>';
+        table_contents += '<th>' + protocols[i].label + '</th>';
+        table_contents += '<th>' + protocols[i].temp + '</th>';
+        table_contents += '<th>' + protocols[i].time + '</th>';
+        table_contents += checkGoto(protocols[i], i);
+        table_contents += '</tr>';
     }
-    return table;
+    return table_contents;
 }
 
 function checkGoto(protocol, currentNumber) {
@@ -151,9 +162,9 @@ function checkGoto(protocol, currentNumber) {
         return '<th></th>';
 }
 
-function checkActionNumber() {
-    if (currentActionNumber != -1) {
-        let currentAction = document.getElementById('protocol-' + currentActionNumber);
+function checkActionNumber(actionNumber) {
+    if (actionNumber != -1) {
+        let currentAction = document.getElementById('protocol-' + actionNumber);
         if (blink) currentAction.style.backgroundColor = lightBlue;
         else currentAction.style.backgroundColor = white;
         blink = !blink;
