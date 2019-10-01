@@ -1,5 +1,1 @@
-<<<<<<< HEAD
 flask
-=======
-flask
->>>>>>> be002a5fa11d0bee75a21d241cf2363b674c7874git mar
