@@ -28,7 +28,7 @@
         <textarea rows="20" cols="20" id="text"
                   onkeydown="if(event.keyCode===9){var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+'\t'+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;}"></textarea>
         <div>
-            <input type="button" class="btn-group btn" value="save" onclick="protocol_edit()">
+            <input type="button" class="btn-group btn" value="save" onclick="protocolEdit()">
             <input type="button" class="btn-group btn btn-right" value="back" onclick="history.back()">
         </div>
 
