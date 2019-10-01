@@ -5,14 +5,13 @@
     <title>Protocols</title>
 
     <!-- bootstrap css -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
-    <link rel="stylesheet" href="//unpkg.com/bootstrap@3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
 
     <!-- style css -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
     <!-- bootstrap javascript -->
-    <script type="text/javascript" src="{{ url_for('static',  filename='js/bootstrap.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static',  filename='js/bootstrap.min.js') }}"></script>
 
     <!-- script javascript   -->
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -38,9 +37,9 @@
         </div>
 
         <div>
-            <input type="button" class="btn-group btn" value="edit" onclick="protocol_edit()"/>
-            <input type="button" class="btn-group btn" value="new" onclick="protocol_new()"/>
-            <input type="button" class="btn-group btn" value="delete" onclick="protocol_delete()"/>
+            <input type="button" class="btn-group btn" value="edit" onclick="protocolEdit()"/>
+            <input type="button" class="btn-group btn" value="new" onclick="protocolNew()"/>
+            <input type="button" class="btn-group btn" value="delete" onclick="protocolDelete()"/>
             <input type="button" class="btn-group btn btn-right" value="back" onclick="history.back()"/>
         </div>
 
