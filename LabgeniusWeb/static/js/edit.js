@@ -1,5 +1,7 @@
 let proto = null;
 let protocols = null;
+
+// host url 
 let host = 'http://210.115.227.78:6009';
 
 function initialized() {

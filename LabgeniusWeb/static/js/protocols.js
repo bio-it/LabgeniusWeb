@@ -2,6 +2,8 @@ let result = null;
 let current_proto = null;
 let current_index = -1;
 let protocols = null;
+
+// host url 
 let host = 'http://210.115.227.78:6009';
 
 
@@ -16,11 +18,11 @@ function protocol_edit() {
     }
 }
 
-function protocol_new() {
+function createProtocol() {
     location.href = "protocols/new";
 }
 
-function protocol_delete() {
+function deleteProtocol() {
     if (current_proto != null) {
         $.ajax({
             url: host + "/api/pcr/protocol/delete",
@@ -41,7 +43,7 @@ function protocol_delete() {
 }
 
 
-function select_protocol() {
+function selectProtocol() {
     $.ajax({
         url: host + "/api/pcr/protocol/select",
         datatype: "json",
@@ -68,8 +70,8 @@ function initialized() {
 
             if (data.result == 'ok') {
                 protocols = data.protocols;
-                document.getElementById('tbody').innerHTML = load_table(data.protocols);
-                set_protocols(data.protocols);
+                document.getElementById('tbody').innerHTML = loadTable(data.protocols);
+                setProtocol(data.protocols);
             }
         },
         error: function (request, status, error) {
@@ -79,7 +81,7 @@ function initialized() {
     });
 }
 
-function load_table(protocols) {
+function loadTable(protocols) {
     let table = "";
     for (let i = 0; i < protocols.length; i++) {
         table += '<tr id="protocol-' + (i + 1) + '">';
@@ -91,11 +93,11 @@ function load_table(protocols) {
     return table;
 }
 
-function set_protocols(protocols) {
-    for (let i = 1; i <= protocols.length; i++) {
+function setProtocol(protos) {
+    for (let i = 1; i <= protos.length; i++) {
         let proto = document.getElementById('protocol-' + i);
         proto.addEventListener('click', focus);
-        proto.addEventListener('dblclick', select_protocol);
+        proto.addEventListener('dblclick', selectProtocol);
     }
 }
 

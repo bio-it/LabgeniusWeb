@@ -2,6 +2,8 @@ let protocols = null;
 let text = null;
 let name = null;
 let check_data = null;
+
+// host url
 let host = 'http://210.115.227.78:6009';
 
 function initialized() {

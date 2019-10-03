@@ -1,5 +1,5 @@
 var result = null;
-var data;
+var data = null;
 var runTimer;
 // Button Box elements
 var btn_read;
@@ -37,8 +37,7 @@ function initialized() {
     remaining_time = document.getElementById('remaining-time');
     table = document.getElementById('table-contents');
 
-    loadJson();
-    if (data.running) onRunning();
+    isRunning();
 }
 
 // load json data
@@ -50,16 +49,17 @@ function loadJson() {
         success: function (json) {
             result = json.result;
             data = json.data;
+            console.log('data-success :' + data);
             if (result == "ok") {
                 //table body
                 table.innerHTML = makeTable(data.protocols, data.totalActionNumber);
 
                 temperature.innerHTML = data.temperature + '℃';
-                elapsed_time.innerHTML = data.elapsedTime == "" ? toHHMMSS(0) : elapsedTime;
+                elapsed_time.innerHTML = data.elapsedTime == "" ? toHHMMSS(0) : data.elapsedTime;
                 remaining_time.innerHTML = toHHMMSS(Number(data.remainingTotalSec));
                 checkActionNumber(data.currentActionNumber);
                 // checkStatusBox();
-                if (remainingTotalSec <= 0)
+                if (data.remainingTotalSec <= 0)
                     alert('pcr end');
 
                 if (data.running) {
@@ -83,17 +83,26 @@ function loadJson() {
 
 }
 
-function onRunning() {
-    //if running interval : 500ms else interval : 10s
-    let interval = data.running ? 500 : 10000;
-    runTimer = setInterval(loadJson());
+function isRunning() {
+    console.log('data : ' + data);
+    //if running interval : 500ms
+    if (data == null) {
+        loadJson();
+        console.log(data);
+        setTimeout(isRunning, 5000);
+    } else {
+        console.log('data : ' + data);
+        let interval = 500;
+        runTimer = setInterval(loadJson, interval);
+    }
 
-    
+
 }
 
 
 // Start protocols
 function start() {
+
     $.ajax({
         url: host + "/api/pcr/start",
         dataType: "json",
@@ -103,13 +112,16 @@ function start() {
         },
         error: function (request, status, error) {
             console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-            if (running) alert('already running!!');
+            if (data.running) alert('already running!!');
         }
     });
 }
 
 // Stop protocols
 function stop() {
+
+    clearInterval(runTimer);
+
     $.ajax({
         url: host + "/api/pcr/stop",
         dataType: "json",
@@ -125,7 +137,7 @@ function stop() {
 
 // Read Protocols
 function read() {
-    if (running) {
+    if (data.running) {
         alert('is running')
         return;
     }
@@ -152,6 +164,9 @@ function makeTable(protocols, totalActionNumber) {
 }
 
 function checkGoto(protocol, currentNumber) {
+    let currentActionNumber =data.currentActionNumber;
+    let remainingGotoCount = data.remainingGotoCount;
+    let remainingSec = data.remainingSec;
     if (protocol.label == 'GOTO') {
         if (remainingGotoCount == -1)
             return '<th>' + protocol.time + '</th>';
