@@ -66,7 +66,7 @@ function newProtocol() {
         success: function (data) {
             console.log(text.value.toString());
             alert(data.result);
-            history.back();
+            location.href='/protocols';
         },
         error: function (data) {
             console.log("result : " + data.result + ", reason : " + data.reason);
