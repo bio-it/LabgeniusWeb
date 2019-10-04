@@ -1,8 +1,9 @@
-let proto = null;
-let protocols = null;
+var proto = null;
+var protocols = null;
+var proto_idx = null;
 
 // host url 
-let host = 'http://210.115.227.78:6009';
+var host = 'http://210.115.227.78:6009';
 
 function initialized() {
 
@@ -37,7 +38,7 @@ function loadProtocol() {
     let value = "";
     let text = document.getElementById('text');
     let data = JSON.parse(proto[4]);
-    value += proto[0] + "\r\n";
+    proto_idx = proto[0] + "\r\n";
     value += proto[2] + "\r\n";
     for (let i = 0; i < data.length; i++) {
         let item = data[i];
@@ -54,14 +55,14 @@ function loadProtocol() {
     text.value = replaceAll(value, '.0', '');
 }
 
-function protocolEdit() {
-    let text = document.getElementById('text');
+function editProtocol() {
+    let text = proto_idx + document.getElementById('text').value.toString();
     $.ajax({
         url: host + "/api/pcr/protocol/edit",
         datatype: "json",
         contentType: "text/plain",
         type: "post",
-        data: replaceAll(text.value.toString(), '\n', '\r\n'),
+        data: replaceAll(text, '\n', '\r\n'),
         success: function (data) {
             if (data.result == 'ok') {
                 history.back();

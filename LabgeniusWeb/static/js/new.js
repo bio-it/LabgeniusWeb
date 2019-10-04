@@ -27,7 +27,7 @@ function initialized() {
     });
 }
 
-function protocolCheck() {
+function checkProtocol() {
     let data = {result: null, reason: null};
 
     for (let i = 0; i < protocols.length; i++) {
@@ -55,7 +55,7 @@ function protocolCheck() {
     });
 }
 
-function protocolNew() {
+function newProtocol() {
     protocolCheck();
     $.ajax({
         url: host + "/api/pcr/protocol/new",

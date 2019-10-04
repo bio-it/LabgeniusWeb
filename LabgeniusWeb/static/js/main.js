@@ -145,31 +145,32 @@ function read() {
 }
 
 // Make html in able body
-function makeTable(protocols, totalActionNumber) {
+function makeTable(protos, totalActionNumber) {
     let table_contents = "";
     for (var i = 0; i < totalActionNumber; i++) {
         table_contents += '<tr id="protocol-' + i + '">';
-        if (protocols[i].label == 'SHOT') {
-            table_contents += '<th>' + protocols[i].label + '</th>';
+        if (protos[i].label == 'SHOT') {
+            table_contents += '<th>' + protos[i].label + '</th>';
             for (var j = 0; j < 3; j++) table_contents += '<th></th>';
             continue;
         }
-        table_contents += '<th>' + protocols[i].label + '</th>';
-        table_contents += '<th>' + protocols[i].temp + '</th>';
-        table_contents += '<th>' + protocols[i].time + '</th>';
-        table_contents += checkGoto(protocols[i], i);
+        table_contents += '<th>' + protos[i].label + '</th>';
+        table_contents += '<th>' + protos[i].temp + '</th>';
+        table_contents += '<th>' + protos[i].time + '</th>';
+        table_contents += checkGoto(protos[i], i);
         table_contents += '</tr>';
     }
     return table_contents;
 }
 
-function checkGoto(protocol, currentNumber) {
+function checkGoto(proto, currentNumber) {
     let currentActionNumber =data.currentActionNumber;
     let remainingGotoCount = data.remainingGotoCount;
     let remainingSec = data.remainingSec;
-    if (protocol.label == 'GOTO') {
+
+    if (proto.label == 'GOTO') {
         if (remainingGotoCount == -1)
-            return '<th>' + protocol.time + '</th>';
+            return '<th>' + proto.time + '</th>';
         return '<th>' + remainingGotoCount + '</th>';
     } else if (currentActionNumber == currentNumber)
         return '<th>' + remainingSec + '</th>';

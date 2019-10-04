@@ -1,27 +1,32 @@
-let result = null;
-let current_proto = null;
-let current_index = -1;
-let protocols = null;
+// Values
+var result = null;
+var current_proto = null;
+var current_index = -1;
+var protocols = null;
 
 // host url 
-let host = 'http://210.115.227.78:6009';
+var host = 'http://210.115.227.78:6009';
 
 
 // Colors
-let lightBlue = "#3e91b5";
-let white = "#ffffff";
+var lightBlue = "#3e91b5";
+var white = "#ffffff";
 
-function protocol_edit() {
+// redirection to protocols\edit<name>
+function editProtocol() {
     if (current_proto != null) {
-        console.log(current_proto.innerText);
         location.href = "protocols/edit/" + current_proto.innerText.toString();
     }
 }
 
+// redirection to protocols\new
 function createProtocol() {
     location.href = "protocols/new";
 }
 
+
+// delete current focusing protocol 
+// post data is plain text
 function deleteProtocol() {
     if (current_proto != null) {
         $.ajax({
@@ -43,6 +48,8 @@ function deleteProtocol() {
 }
 
 
+// select protocol and redirection to main
+// post data is plain text
 function selectProtocol() {
     $.ajax({
         url: host + "/api/pcr/protocol/select",
@@ -51,7 +58,7 @@ function selectProtocol() {
         type: "post",
         data: get(current_proto)[0].toString(),
         success: function (data) {
-            alert(data.result);
+            alert('select protocol : ' + current_proto[1].toString());
             history.back();
         },
         error: function (request, status, error) {
@@ -60,7 +67,7 @@ function selectProtocol() {
     });
 }
 
-
+// initialize current page
 function initialized() {
     $.ajax({
         url: host + "/api/pcr/protocol/list",
@@ -69,9 +76,9 @@ function initialized() {
         success: function (data) {
 
             if (data.result == 'ok') {
-                protocols = data.protocols;
-                document.getElementById('tbody').innerHTML = loadTable(data.protocols);
-                setProtocol(data.protocols);
+                protocols = data.protocols;                                             // get protocol list
+                document.getElementById('tbody').innerHTML = loadTable(data.protocols); // setting current page
+                setProtocol(data.protocols);                                            // set click event listener
             }
         },
         error: function (request, status, error) {
@@ -81,18 +88,22 @@ function initialized() {
     });
 }
 
-function loadTable(protocols) {
-    let table = "";
-    for (let i = 0; i < protocols.length; i++) {
-        table += '<tr id="protocol-' + (i + 1) + '">';
-        table += '<th>' + protocols[i][1] + '</th>';
-        table += '</tr>';
+// return table-contents html
+function loadTable(protos) {
+    let table_contents = "";
+    for (let i = 0; i < protos.length; i++) {
+        // table_contents += '<tr id="protocol-' + (i + 1) + '">';
+        table_contents += `<tr id="protocol-${i+1}">`;
+        // table_contents += '<th>' + protos[i][1] + '</th>';
+        table_contents += `<th>${protos[i][1]}</th>`;
+        table_contents += '</tr>';
 
     }
 
-    return table;
+    return table_contents;
 }
 
+// set click event listener
 function setProtocol(protos) {
     for (let i = 1; i <= protos.length; i++) {
         let proto = document.getElementById('protocol-' + i);
@@ -101,6 +112,7 @@ function setProtocol(protos) {
     }
 }
 
+// set current protocol and change focussing protocol color  
 function focus() {
     let target_proto = event.currentTarget;
     if (current_proto == null) {
