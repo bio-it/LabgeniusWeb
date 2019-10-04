@@ -58,7 +58,7 @@ function selectProtocol() {
         type: "post",
         data: get(current_proto)[0].toString(),
         success: function (data) {
-            alert('select protocol : ' + current_proto[1].toString());
+            alert('select protocol : ' + get(current_proto)[1].toString());
             history.back();
         },
         error: function (request, status, error) {
@@ -132,7 +132,6 @@ function focus() {
 function get(proto) {
     for (let i = 0; i < protocols.length; i++) {
         if (proto.innerText == protocols[i][1]) {
-            console.log(protocols[i][0]);
             return protocols[i];
         }
     }
