@@ -1,92 +1,173 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
+
 <head>
     <meta charset="UTF-8">
-    <title>Main</title>
+    <title>LabgeniusWeb</title>
+
+
+
+    <!-- jquery javascript -->
+    <!-- <script type="text/javascript" src="../static/lib/jquery/jquery-3.4.1.min.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
 
     <!-- bootstrap css -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}"> -->
+    <link rel="stylesheet" href="../static/lib/bootstrap/bootstrap.min.css">
 
-    <!-- style css -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
     <!-- bootstrap javascript -->
-    <script type="text/javascript" src="{{ url_for('static',  filename='js/bootstrap.min.js') }}"></script>
+    <!-- <script type="text/javascript" src="{{ url_for('static',  filename='js/bootstrap.min.js') }}"></script> -->
+    <script type="text/javascript" src="../static/lib/bootstrap/bootstrap.min.js"></script>
 
-    <!-- script javascript   -->
-    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename= 'js/main.js') }}"></script>
+
+    <!-- custom style css -->
+    <link rel="stylesheet" href="../static/css/main.css">
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"> -->
+
+    <!-- custom script javascript   -->
+    <!-- <script type="text/javascript" src="{{ url_for('static', filename= 'js/main.js') }}"></script> -->
+
 </head>
-<body>
-<!-- main container -->
-<div class="container">
-    <!--  -->
-    <div class="container-screen">
-        <!--Status Box (Grid)-->
-        <div class="row status-box">
-            <!-- Serial Number -->
-            <div class="col-3 status-box-elements">
-                <form>
-                    <fieldset class="status-border">
-                        <legend>Serial Number</legend>
-                        <div class="controls" id="serial-number">{{ serial_number }}</div>
-                    </fieldset>
-                </form>
-            </div>
-            <!-- Temperature -->
-            <div class="col-3 ">
-                <form>
-                    <fieldset class="status-border">
-                        <legend>Temperature</legend>
-                        <div class="controls status-box-elements" id="temperature">{{ temperature }}</div>
-                    </fieldset>
-                </form>
-            </div>
-            <!-- LID Heater-->
-            <div class="col-3 ">
-                <form>
-                    <fieldset class="status-border">
-                        <legend>Elapsed Time</legend>
-                        <div class="controls status-box-elements" id="elapsed-time">{{ elapsed_time }}</div>
-                    </fieldset>
-                </form>
-            </div>
-            <!-- total time-->
-            <div class="col-3 status-box-elements">
-                <form>
-                    <fieldset class="status-border">
-                        <legend>Remaining Time</legend>
-                        <div class="controls" id="remaining-time">{{ remaining_time }}</div>
-                    </fieldset>
-                </form>
 
-            </div>
+<body>
+
+    <div class="contents">
+        <div class="container row justify-content-center">
+            <!-- Connection status start-->
+            <fieldset class="connection-group col-2">
+                <legend>Connection</legend>
+                <div>
+                    Serial Number : <span class="label" id="serialnumber">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                </div>
+                <div>
+                    Status : <span class="label" id="connection-status">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                </div>
+            </fieldset>
+            <!-- Connection status end-->
+
+            <!-- Progress status start-->
+            <fieldset class="progress-group col-4">
+                <legend>Progress</legend>
+                <div>
+                    Status : <span class="label" id="progress-status">idle</span>
+                </div>
+                <div>
+                    <!-- <progress value="0" , max="100" , id="progressbar"></progress> -->
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0"
+                            aria-valuemax="100"></div>
+                    </div>
+                </div>
+                <div>
+                    PCR Remaining time : <span id=remaining-time>25%</span>
+
+                </div>
+
+            </fieldset>
+            <!-- Progress status end-->
         </div>
-        <!-- Table Box -->
-        <div class="table-box">
-            <table class="table">
-                <!-- -->
-                <thead>
-                <tr class="table-primary">
-                    <th>Label</th>
-                    <th>Temp</th>
-                    <th>Time</th>
-                    <th>Remain</th>
-                </tr>
-                </thead>
-                <tbody id="table-contents"></tbody>
-            </table>
+
+
+        <!-- Canvus start-->
+        <div class="container row justify-content-center">
+            <canvas id="canvas" class="canvas col-8"></canvas>
         </div>
-        <!-- Button Box -->
-        <div class="btn-box">
-            <input type="button" class="btn-group btn" value="Start" id="btn-start" onclick="start();" disabled='disabled'/>
-            <input type="button" class="btn-group btn" value="Stop" id="btn-stop" onclick="stop();" disabled='disabled'/>
-            <input type="button" class="btn-group btn btn-right" value="Protocols" id="btn-protocols" onclick="read()"/>
+
+        <div class="container row justify-content-center">            
+        <!-- Canvus end-->
+
+            <!-- Device status start-->
+            <fieldset class="device-status-group col-2">
+                <legend>Device status</legend>
+
+                <div>
+                    Temperture :  <span class="label" id=temperture-status>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                </div>
+            </fieldset>
+            <!-- Device status end-->
+
+            <!-- CT values start-->
+            <fieldset class="ct-value-group col-4">
+                <legend>CT values</legend>
+                <div class="row">
+                    <div class="col-s ct-value">
+                        <div class="text">FAM</div>
+                        <img src="../res/fam.bmp" id="fam-icon">
+                        <div class="label" id="fam-value"></div>
+                    </div>
+
+                    <div class="col-s ct-value">
+                        <div class="text">HEX</div>
+                        <img src="../res/hex.bmp" id="hex-icon">
+                        <div class="label" id="hex-value"></div>
+                    </div>
+                    <div class="col-s ct-value">
+                        <div class="text">ROX</div>
+                        <img src="../res/rox.bmp" id="rox-icon">
+                        <div class="label" id="rox-value"></div>
+                    </div>
+                    <div class="col-s ct-value">
+                        <div class="text">CY5</div>
+                        <img src="../res/cy5.bmp" id="ct5-icon">
+                        <div class="label" id="cy5-value" ></div>
+                    </div>
+                </div>
+            </fieldset>
+            <!-- CT values end -->
+        </div>
+
+
+        <div class="container row justify-content-center">
+            <!-- Protocol start-->
+            <fieldset class="protocol-group col-2 justify-content-center">
+                <legend>Protocol</legend>
+                <select class="combobox">
+                    <option>None</option>
+                </select>
+                <button class="button" id="operation-button">Start</button>
+                <button class="button" id="setup-button">Setup</button>
+            </fieldset>
+            <!-- Protocol end -->
+
+            <!-- Result start -->
+            <fieldset class="result-group  col-4 justify-content-center">
+                <legend>Result</legend>
+                <div>
+                    <table class="table table-bordered table-sm">
+                        <thead>
+                            <tr>
+                                <th scope="col">Target</th>
+                                <th scope="col">Result</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td scope="row"></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td scope="row"></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td scope="row"></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td scope="row"></td>
+                                <td id="id_value"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </fieldset>
+            <!-- Protocol end -->
         </div>
     </div>
-</div>
 
-<script type="text/javascript">initialized();</script>
+
 </body>
+
 </html>
