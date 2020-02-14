@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Protocol Editor</title>
+
+    <!-- jquery javascript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <!-- bootstrap css -->
+    <link rel="stylesheet" href="../static/lib/bootstrap/bootstrap.min.css">
+
+    <!-- bootstrap javascript -->
+    <script type="text/javascript" src="../static/lib/bootstrap/bootstrap.min.js"></script>
+
+    <!-- custom style css -->
+    <link rel="stylesheet" href="../static/css/editor.css">
+
+</head>
+
+<body>
+    <div class="contents">
+
+        <!-- Protocol Header start -->
+        <div class="contanier row ">
+
+            <!-- Filter start -->
+            <fieldset class="filter-group col-7">
+                <legend>Filter(Label, CT)</legend>
+                <div/div class="row">
+
+                    <!-- FAM -->
+                    <div class="ct-value col-sm row">
+                        <!-- <div>
+                            <span>FAM</span>
+                            <input type="text" class="label" id="fam-subname"></input>
+                        </div>
+                        <div>
+                            <img src="../res/fam.bmp" id="fam-img">
+                            <input type="number" class="label" id="fam-threshold" min="0"></input>
+                        </div> -->
+                        <div class="col-1">
+                            <div>FAM</div>
+                            <img src="../res/fam.bmp" id="fam-img">
+                        </div>
+                        <div class="col">
+                            <input type="text" class="label" id="fam-subname"></input>
+                            <input type="number" class="label" id="fam-threshold" min="0"></input>
+                        </div>
+                    </div>
+
+                    <!-- HEX -->
+                    <div class="ct-value col-sm row">
+                        <div class="col-1">
+                            <div>HEX</div>
+                            <img src="../res/hex.bmp" id="hex-img">
+                        </div>
+                        <div class="col">
+                            <input type="text" class="label" id="hex-subname"></input>
+                            <input type="number" class="label" id="hex-threshold" min="0"></input>
+                        </div>
+                    </div>
+
+                    <!-- ROX -->
+                    <div class="ct-value col-sm row">
+                        <div class="col-1">
+                            <div>ROX</div>
+                            <img src="../res/rox.bmp" id="rox-img">
+                        </div>
+                        <div class="col">
+                            <input type="text" class="label" id="rox-subname"></input>
+                            <input type="number" class="label" id="rox-threshold" min="0"></input>
+                        </div>
+                    </div>
+                    <!-- CY5 -->
+                    <div class="ct-value col-sm row">
+                        <div class="col-1">
+                            <div>CY5</div>
+                            <img src="../res/cy5.bmp" id="cy5-img">
+                        </div>
+                        <div class="col">
+                            <input type="text" class="label" id="cy5-subname"></input>
+                            <input type="number" class="label" id="cy5-threshold" min="0"></input>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <!-- Filter end -->
+
+            <!-- Protocol name start -->
+            <div class="col">
+                <div class="name-box">
+                    <div>
+                        <span class="text">Protocol Name : </span>
+                        <input type="text" id="protocol-name"></input type="text" id="protocol-name">
+                    </div>
+                    <div class="button-box">
+                        <button class="button" id="save-button">Save</button>
+                        <button class="button" id="cancel-button">Cancel</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Protocol name end -->
+        </div>
+        <!-- Protocol Header end -->
+
+        <!-- Protocol contexts start -->
+        <div class="contanier row justify-content-center">
+
+            <!-- Protocol start-->
+            <fieldset class="protocol-group col">
+
+                <legend>Protocol</legend>
+                <textarea id="protocol" cols="30" rows="10"></textarea>
+
+            </fieldset>
+            <!-- Protocol end-->
+
+            <!-- Magneto Protocol start -->
+            <fieldset class="protocol-group col">
+                <legend>Magneto Protocol</legend>
+                <textarea id="magneto-protocol" cols="30" rows="10"></textarea>
+            </fieldset>
+            <!-- Magneto Protocol end -->
+        </div>
+        <!-- Protocol contexts end -->
+
+    </div>
+
+</body>
+
+</html>
