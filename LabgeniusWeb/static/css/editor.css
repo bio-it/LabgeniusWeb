@@ -46,7 +46,6 @@ legend {
 .ct-value div {
     margin : 0px 5px;
     display: inline;
-    
 }
 
 img {
@@ -66,9 +65,13 @@ img {
    margin: 45px 0;
 }
 
+#protocol-name {
+    margin : 0 0 10px 20px;
+}
+
 .button-box {
-    float: right;
-    margin : 0 20%;
+    float: left;
+    margin : 0 0 0 180px;
 }
 
 button {
