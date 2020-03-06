@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>setup</title>
+
+
+    <!-- jquery javascript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <!-- bootstrap css -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='lib/bootstrap/bootstrap.min.css') }}">
+
+    <!-- bootstrap javascript -->
+    <script type="text/javascript" src="{{ url_for('static',  filename='lib/bootstrap/bootstrap.min.js') }}"></script>
+
+    <!-- custom style css -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/setup.css') }}">
+
+    <!-- custom script javascript   -->
+    <script type="text/javascript" src="{{ url_for('static', filename= 'js/setup.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename= 'js/util.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename= 'js/protocol.js') }}"></script>
+
+</head>
+
+<body>
+
+    <div class="contents">
+        <div class="container">
+            <fieldset class="manager-group">
+                <legend>Protocol Manager</legend>
+                <div class="row">
+                    <div class="col-sm-8">
+                        <ul class="list-group" id="protocol-list">
+                            <!-- protocol list -->
+                        </ul>
+                    </div>
+
+                    <div class="col-sm-3 button-box offset-1">
+                        <button type="button" id="button-add" onclick="addProtocol()">ADD</button>
+                        <button type="button" id="button-edit" onclick="editProtocol()">EDIT</button>
+                        <button type="button" id="button-delete" onclick="deleteProtocol()">DELETE</button>
+                    </div>
+
+                </div>
+            </fieldset>
+
+            <fieldset class="history-group row">
+                <legend>Test history</legend>
+                <div class="col">
+                    <ul class="list-group" id="history-list">
+                        <!-- histroy list -->
+                    </ul>
+                </div>
+            </fieldset>
+
+            <div class="row">
+                <button class="button col-2 offset-9" id="button-cancel" onclick="toMainPage()">Back</button>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+<script>
+    $(document).ready(function () {
+        loadConfig();
+        init();
+    })
+</script>
+
+</html>
