@@ -1,30 +1,21 @@
 # LabgeniusWeb
 Web gui for new labgenius
+using Next Js and React 
 
 # Page
 
 1. Main Page
-    - http://210.115.229.101:5000
-    - PCR Start, Stop.
+    - http://210.115.229.101
+    - PCR Start, Stop, Protocol Select.
 
 
-2. Protocols (Protocol List)
-    - http://210.115.229.101:5000/protocols
-    - protocol select, new, delete, edit.
+2. Setup (Protocol List)
+    - http://210.115.229.101/setup
+    - protocol new, delete, edit.
+    - history list and graph
 
 
-3. Protocol new 
-    - http://210.115.229.101:5000/protocols/new
-  
-  
-4. Protocol Edit
-    - http://210.115.229.101:5000/protocols/edit/name
-  
-# Function 
-1. protocol select
-
-2. protocol new
-
-3. protocol delete
-
-4. protocol edit
+3. Editor
+    - http://210.115.229.101/editor
+    - set Filter CT value, name
+    - set Pcr Protocol and Magneto Protocol
